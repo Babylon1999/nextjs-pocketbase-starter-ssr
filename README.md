@@ -1,0 +1,2 @@
+# nextjs-pocketbase-starter-ssr
+ 
