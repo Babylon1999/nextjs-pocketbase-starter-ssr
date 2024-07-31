@@ -1,9 +1,11 @@
 # Next.js & PocketBase Demo that supports SSR & App Router
 
 
+https://github.com/user-attachments/assets/19f1b3b0-1775-483c-ba22-54de02cc9fbc
 
 
-[![Watch the video](https://blog.saif-hassan.com/wp-content/uploads/2024/07/screencast_00000.mp4)](https://blog.saif-hassan.com/wp-content/uploads/2024/07/screencast_00000.mp4)
+
+
 
 
 ### Pages
@@ -11,6 +13,7 @@
 - Login
 - Signup
 - Account Page (to edit user meta or password)
+- Dashboard
 
 ### Features
 
