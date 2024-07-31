@@ -13,6 +13,7 @@ https://github.com/user-attachments/assets/19f1b3b0-1775-483c-ba22-54de02cc9fbc
 - Login
 - Signup
 - Account Page (to edit user meta or password)
+- Dashboard
 
 ### Features
 
