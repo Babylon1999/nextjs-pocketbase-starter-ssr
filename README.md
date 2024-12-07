@@ -17,7 +17,7 @@
 - Middleware
 
 > [!IMPORTANT]
-> The rate limiter identifies incoming requests by their IP address. To ensure this works correctly, set the `True > IP Header` in the PocketBase settings to `PB-USER-IP`. Note that in this demo, the user's IP is retrieved from the `X-Forwarded-For header`.
+> The rate limiter identifies incoming requests by their IP address. To ensure this works correctly, set the `True IP Header` in the PocketBase settings to `PB-USER-IP`. Note that in this demo, the user's IP is retrieved from the `X-Forwarded-For header`.
 
 # Instructions
 
