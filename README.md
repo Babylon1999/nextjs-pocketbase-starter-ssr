@@ -1,6 +1,6 @@
 # Next.js & PocketBase Demo that supports SSR & App Router
 
-https://github.com/user-attachments/assets/19f1b3b0-1775-483c-ba22-54de02cc9fbc
+[![Watch the video](https://github.com/user-attachments/assets/19f1b3b0-1775-483c-ba22-54de02cc9fbc)](https://github.com/user-attachments/assets/19f1b3b0-1775-483c-ba22-54de02cc9fbc)
 
 ### Pages
 
@@ -14,7 +14,6 @@ https://github.com/user-attachments/assets/19f1b3b0-1775-483c-ba22-54de02cc9fbc
 - Turnstile captcha protection for login and signup pages
 - Basic CSRF protection for account pages
 - IP-based rate limiter
-- Protected dashboard page
 - Middleware
 
 > [!IMPORTANT]
