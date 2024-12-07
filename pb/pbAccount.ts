@@ -3,9 +3,7 @@
 import { solveToken } from "./pbCsrfToken";
 import { updateUserData } from "./pbFunctions";
 import { logout } from "./pbLogout";
-import { updateRateLimiter } from "./pbRateLimit";
 import DOMPurify from "isomorphic-dompurify";
-import { headers } from "next/headers";
 
 export async function updateUserMeta(formData: FormData) {
   "use server";
@@ -19,18 +17,6 @@ export async function updateUserMeta(formData: FormData) {
       error: "Token is invalid, try refreshing the page and submitting again.",
     };
   }
-
-  // Get the IP address from the request headers
-  const ip = headers().get("X-Forwarded-For") as string;
-
-  // Rate limit check
-  if (!(await updateRateLimiter(ip))) {
-    return {
-      success: false,
-      error: "Too many requests. Try again later.",
-    };
-  }
-
   try {
     const update = await updateUserData({ name: name });
     if (update?.status === 200) {
@@ -39,7 +25,7 @@ export async function updateUserMeta(formData: FormData) {
       };
     } else {
       return {
-        error: "Failed to Update.",
+        error: update.response?.statusText,
       };
     }
   } catch (error: any) {

@@ -17,7 +17,7 @@ export async function Signup(formData: any) {
   const password = DOMPurify.sanitize(formData.get("password"));
   const ConfirmPassword = DOMPurify.sanitize(formData.get("confirm-password"));
 
-  const ip = headers().get("X-Forwarded-For");
+  const ip = (await headers()).get("X-Forwarded-For");
 
   // Starting the captcha verification process.
   let CaptchaForm = new FormData();
@@ -51,6 +51,7 @@ export async function Signup(formData: any) {
           "Content-Type": "application/json",
           // This is the API key that will help us access the PB instance.
           "X-POCKETBASE-API-KEY": ApiKey,
+          "PB-USER-IP": (await headers()).get("X-Forwarded-For") || "0.0.0.0",
         },
         body: JSON.stringify({
           email: email,
@@ -75,6 +76,7 @@ export async function Signup(formData: any) {
         headers: {
           "Content-Type": "application/json",
           "X-POCKETBASE-API-KEY": ApiKey,
+          "PB-USER-IP": (await headers()).get("X-Forwarded-For") || "0.0.0.0",
         },
         body: JSON.stringify({ identity: email, password }),
       }
@@ -85,7 +87,7 @@ export async function Signup(formData: any) {
         error: JSON.stringify(JWTTokenResPonse.data),
       };
     }
-    cookies().set("pb-cookie", JWTTokenResPonse.token, {
+    (await cookies()).set("pb-cookie", JWTTokenResPonse.token, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",

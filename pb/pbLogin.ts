@@ -13,7 +13,7 @@ export async function login(formData: any) {
   );
   const email = DOMPurify.sanitize(formData.get("email"));
   const password = DOMPurify.sanitize(formData.get("password"));
-  const ip = headers().get("X-Forwarded-For");
+  const ip = (await headers()).get("X-Forwarded-For");
 
   // Starting the captcha verification process.
   let CaptchaForm = new FormData();
@@ -47,13 +47,14 @@ export async function login(formData: any) {
           "Content-Type": "application/json",
           // This is the API key that will help us access the PB instance.
           "X-POCKETBASE-API-KEY": ApiKey,
+          "PB-USER-IP": (await headers()).get("X-Forwarded-For") || "0.0.0.0",
         },
         body: JSON.stringify({ identity: email, password: password }),
       }
     );
     const data = await response.json();
     if (response.status === 200) {
-      cookies().set("pb-cookie", data.token, {
+      (await cookies()).set("pb-cookie", data.token, {
         path: "/",
         httpOnly: true,
         sameSite: "strict",

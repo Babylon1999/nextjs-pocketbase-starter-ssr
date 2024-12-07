@@ -13,11 +13,14 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en">
+      {/* suppressHydrationWarning is needed because of a bug in shadcn, for more context
+      : https://github.com/shadcn-ui/ui/issues/5552 
+      */}
+      <html suppressHydrationWarning lang="en">
         <head />
         <body
           className={cn(
-            "bg-background min-h-screen font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased",
             fontSans.variable
           )}
         >

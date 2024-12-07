@@ -1,6 +1,7 @@
 import "server-only";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { headers } from "next/headers";
 
 const ApiKey = process.env.SECURE_API_KEY as string;
 
@@ -16,7 +17,7 @@ export async function updateUserData(
 ): Promise<UpdateUserDataResponse> {
   const userobject = await getTheUserFromCookie();
   const id = await userobject.id;
-  const token = cookies().get("pb-cookie");
+  const token = (await cookies()).get("pb-cookie");
 
   if (!token) {
     return {
@@ -36,6 +37,7 @@ export async function updateUserData(
           "Content-Type": "application/json",
           "X-POCKETBASE-API-KEY": ApiKey,
           Authorization: token.value,
+          "PB-USER-IP": (await headers()).get("X-Forwarded-For") || "0.0.0.0",
         },
         body: JSON.stringify(data),
       }
@@ -66,7 +68,7 @@ export async function IsLoggedIn() {
 
 export async function getTheUserFromCookie() {
   "use server";
-  const token = cookies().get("pb-cookie");
+  const token = (await cookies()).get("pb-cookie");
   if (!token) return null;
 
   const decodedToken = jwt.decode(token.value) as JwtPayload;
@@ -84,6 +86,7 @@ export async function getTheUserFromCookie() {
           "Content-Type": "application/json",
           "X-POCKETBASE-API-KEY": ApiKey,
           Authorization: token.value,
+          "PB-USER-IP": (await headers()).get("X-Forwarded-For") || "0.0.0.0",
         }),
         // This is nessary because of the CSRF token.
         cache: "no-store",
@@ -95,7 +98,6 @@ export async function getTheUserFromCookie() {
     }
     return await response.json();
   } catch (error: any) {
-    console.error("Error getting the user:", error.message);
     return { error: error.message };
   }
 }

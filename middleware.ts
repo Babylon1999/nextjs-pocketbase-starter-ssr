@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -6,7 +7,7 @@ const ApiKey = process.env.SECURE_API_KEY as string;
 
 async function CheckUser(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore?.get("pb-cookie");
 
   // If there's no cookie at all
@@ -23,6 +24,7 @@ async function CheckUser(req: NextRequest) {
         "Content-Type": "application/json",
         "X-POCKETBASE-API-KEY": ApiKey,
         Authorization: token.value,
+        "PB-USER-IP": (await headers()).get("X-Forwarded-For") || "0.0.0.0",
       }),
     }
   );
